@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="自律应用 - 帮助您提升时间管理能力和自律性">
+  <meta name="theme-color" content="#3b82f6">
+  <title>自律应用</title>
+  
+  <!-- 图标 -->
+  <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/svgs/solid/clock.svg" type="image/svg+xml">
+  
+  <!-- 字体 -->
+  <link rel="preconnect" href="https://fonts.loli.net">
+  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- 基础样式 -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body, #root {
+      height: 100%;
+      font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #f9fafb;
+      color: #1f2937;
+    }
+    
+    #loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #f9fafb;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out;
+    }
+    
+    #loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(59, 130, 246, 0.2);
+      border-radius: 50%;
+      border-top-color: #3b82f6;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/index-CgMPwClV.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BaVkx4tQ.css">
+</head>
+<body>
+  <!-- 加载指示器 -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <p>加载中...</p>
+  </div>
+  
+  <!-- React应用根元素 -->
+  <div id="root"></div>
+  
+  <!-- 错误处理 -->
+  <script>
+    window.addEventListener('error', function(event) {
+      console.error('全局错误:', event.error);
+      
+      // 显示友好的错误提示
+      const root = document.getElementById('root');
+      if (root) {
+        root.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 20px; text-align: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12" y2="16"></line>
+            </svg>
+            <h2 style="margin-top: 20px; color: #e11d48;">应用出错了</h2>
+            <p style="margin-top: 10px; color: #6b7280;">很抱歉，应用发生了错误。请尝试刷新页面。</p>
+            <button onclick="window.location.reload()" style="margin-top: 20px; padding: 10px 20px; background-color: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
+              刷新页面
+            </button>
+          </div>
+        `;
+      }
+      
+      // 防止错误冒泡
+      event.preventDefault();
+    });
+    
+    // 处理未捕获的Promise异常
+    window.addEventListener('unhandledrejection', function(event) {
+      console.error('未处理的Promise异常:', event.reason);
+      event.preventDefault();
+    });
+  </script>
+  
+  <!-- React应用入口 -->
+  
+  <!-- 隐藏加载指示器 -->
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.classList.add('hidden');
+          setTimeout(function() {
+            loading.style.display = 'none';
+          }, 500);
+        }
+      }, 500);
+    });
+  </script>
+</body>
+</html>
