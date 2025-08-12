@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>plan</title>
+    <meta name="description" content="自律应用帮助您管理计划、培养习惯、记录专注时间和测试成绩，提升自律性和时间管理能力">
+    <meta name="keywords" content="自律,时间管理,习惯养成,专注计时,计划管理,测试记录">
+    <meta name="author" content="自律应用团队">
+    
+    <!-- 移动端适配 -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="自律应用">
+    
+    <!-- PWA支持 -->
+    <link rel="manifest" href="data:application/json,{}">
+    <meta name="theme-color" content="#3b82f6">
+    
+    <!-- 图标 -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E">
+    
+    <!-- 预加载核心CSS资源 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></noscript>
+    
+    <!-- 预加载FontAwesome图标 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- 预加载字体 -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.loli.net/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 全局样式 -->
+    
+    <style>
+        /* 页面加载样式 */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .loading-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* 确保应用容器占满全屏 */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        }
+        
+        #root {
+            height: 100%;
+            width: 100%;
+        }
+        
+        /* 防止iframe加载问题 */
+        body {
+            background-color: #f9fafb;
+        }
+        
+        /* 移动端安全区域适配 */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(12px, env(safe-area-inset-left));
+                padding-right: max(12px, env(safe-area-inset-right));
+            }
+        }
+    </style>
+  <script type="module" crossorigin src="/assets/index-DqzMzADO.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CtF8Zjbj.css">
+</head>
+<body>
+    <!-- 页面加载动画 -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">自律应用</div>
+        <div class="loading-subtitle">正在加载中...</div>
+    </div>
+    
+    <!-- React应用根容器 -->
+    <div id="root"></div>
+    
+    <!-- 应用初始化脚本 -->
+    <script>
+        // 全局错误处理
+        window.addEventListener('error', function(event) {
+            console.error('全局错误捕获:', event.error);
+            // 错误不阻止应用继续运行
+            event.preventDefault();
+        });
+        
+        // 处理未捕获的Promise异常
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('未处理的Promise异常:', event.reason);
+            event.preventDefault();
+        });
+        
+        // 检查localStorage可用性
+        function checkLocalStorage() {
+            try {
+                const test = '__localStorage_test__';
+                localStorage.setItem(test, test);
+                localStorage.removeItem(test);
+                return true;
+            } catch (e) {
+                console.warn('LocalStorage不可用，应用功能可能受限');
+                return false;
+            }
+        }
+        
+        // 初始化应用数据
+        function initializeApp() {
+            if (!checkLocalStorage()) return;
+            
+            // 初始化必要的localStorage数据
+            const defaultData = {
+                'plans_data': '[]',
+                'focus_sessions': '[]',
+                'tests_data': '[]',
+                'habits_data': '[]',
+                'habit_completions': '[]',
+                'stats_data': '[]',
+                'focus_records': '[]',
+                'plan_status': '{}',
+                'sync_settings': JSON.stringify({
+                    enabled: false,
+                    last_sync: null,
+                    sync_interval: 300000
+                }),
+                'user_profile': JSON.stringify({
+                    username: '',
+                    created_at: new Date().toISOString()
+                })
+            };
+            
+            Object.keys(defaultData).forEach(key => {
+                if (!localStorage.getItem(key)) {
+                    localStorage.setItem(key, defaultData[key]);
+                }
+            });
+        }
+        
+        // 应用启动后隐藏加载动画
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    loadingScreen.remove();
+                }, 500);
+            }
+        }
+        
+        // 初始化应用
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            
+            // 确保React应用加载完成后隐藏加载动画
+            setTimeout(hideLoadingScreen, 1000);
+        });
+        
+        // 页面可见性变化处理
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                // 页面重新可见时，可以在这里添加同步逻辑
+                console.log('页面重新激活');
+            }
+        });
+        
+        // Service Worker注册（PWA支持）
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // 暂时不注册Service Worker，避免缓存问题
+                // navigator.serviceWorker.register('/sw.js');
+            });
+        }
+        
+        // 网络状态监听
+        window.addEventListener('online', function() {
+            console.log('网络已连接');
+        });
+        
+        window.addEventListener('offline', function() {
+            console.log('网络已断开');
+        });
+    </script>
+    
+    <!-- React和相关依赖 -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-router-dom@6/dist/umd/react-router-dom.production.min.js"></script>
+    
+    <!-- 应用主脚本 -->
+</body>
+</html>
