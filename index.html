@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自律应用</title>
+  <meta name="description" content="自律应用 - 提升时间管理能力和自律性">
+  <meta name="theme-color" content="#3b82f6">
+  
+  <!-- 预加载关键资源 -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" as="style">
+  
+  <!-- 外部样式库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  
+  <!-- Font Awesome图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 全局样式 -->
+  <style>
+    /* 全局重置和基础样式 */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: #f8fafc;
+      color: #111827;
+      line-height: 1.5;
+    }
+
+    #root {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 移动端适配 */
+    @media (max-width: 768px) {
+      /* 移动端卡片优化 */
+      .plan-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+      
+      /* 移动端输入框 */
+      input, select, textarea {
+        font-size: 16px !important; /* 防止iOS自动缩放 */
+        min-height: 44px;
+      }
+      
+      /* 触摸友好的按钮 */
+      button, .btn {
+        min-height: 44px;
+        min-width: 44px;
+        touch-action: manipulation;
+      }
+    }
+
+    /* 滚动容器样式 */
+    .scroll-container {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      height: calc(100vh - 64px);
+      padding-bottom: 20px;
+    }
+
+    /* 优雅的滚动条 */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a1a1a1;
+    }
+
+    /* 加载动画 */
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+  </style>
+
+  <!-- PWA相关 -->
+  <link rel="manifest" href="data:application/json,{%22name%22:%22自律应用%22,%22short_name%22:%22自律%22,%22theme_color%22:%22%233b82f6%22,%22background_color%22:%22%23ffffff%22,%22display%22:%22standalone%22,%22start_url%22:%22/%22}">
+  
+  <!-- 移动端优化meta标签 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="自律应用">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <!-- 防止缩放 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script type="module" crossorigin src="/assets/index-Chgwygc9.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BDb7vh0j.css">
+</head>
+<body>
+  <div id="root">
+    <!-- 加载指示器 -->
+    <div id="loading" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+      <div style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #3b82f6; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+      <p style="text-align: center; margin-top: 10px; color: #6b7280; font-size: 14px;">加载中...</p>
+    </div>
+  </div>
+
+  <!-- React和ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- React Router -->
+  <script crossorigin src="https://unpkg.com/react-router-dom@6.22.3/dist/umd/react-router-dom.production.min.js"></script>
+  
+  <!-- Axios -->
+  <script crossorigin src="https://unpkg.com/axios@1.6.2/dist/axios.min.js"></script>
+  
+  <!-- Date-fns -->
+  <script crossorigin src="https://unpkg.com/date-fns@2.30.0/index.min.js"></script>
+  
+  <!-- Chart.js -->
+  <script crossorigin src="https://unpkg.com/chart.js@4.4.0/dist/chart.umd.js"></script>
+  
+  <!-- 应用入口脚本 -->
+
+  <script>
+    // 隐藏加载指示器
+    window.addEventListener('load', function() {
+      const loading = document.getElementById('loading');
+      if (loading) {
+        loading.style.display = 'none';
+      }
+    });
+
+    // 移动端适配和性能优化
+    (function() {
+      // 防止双击缩放
+      document.addEventListener('touchstart', function(event) {
+        if (event.touches.length > 1) {
+          event.preventDefault();
+        }
+      });
+
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function(event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+
+      // 防止iOS橡皮筋效果
+      document.addEventListener('touchmove', function(event) {
+        if (event.scale !== 1) {
+          event.preventDefault();
+        }
+      }, { passive: false });
+
+      // 屏幕旋转重新计算高度
+      window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+          window.scrollTo(0, 0);
+        }, 100);
+      });
+    })();
+
+    // 全局错误处理
+    window.addEventListener('error', function(event) {
+      console.error('全局错误:', event.error);
+    });
+
+    window.addEventListener('unhandledrejection', function(event) {
+      console.error('未处理的Promise异常:', event.reason);
+      event.preventDefault();
+    });
+  </script>
+</body>
+</html>
